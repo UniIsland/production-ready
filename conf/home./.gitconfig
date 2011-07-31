@@ -1,15 +1,21 @@
+[user]
+	name = Tao
+	email = tao@huangtao.me
+[core]
+	editor = vim
+[diff]
+	tool = vimdiff
+[difftool]
+	prompt = false
 [merge]
 	tool = vimdiff
 [rerere]
 	enabled = true
-[user]
-	name = Tao
-	email = tech@huangtao.me
 [color]
 	status = auto
-#	diff = auto
-#	branch = auto
-#	interactive = auto
+	diff = auto
+	branch = auto
+	interactive = auto
 #	ui = true
 #	pager = true
 [alias]
@@ -22,5 +28,3 @@
 	lg = log --graph --pretty=oneline --abbrev-commit
 	lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	diffstat = diff-tree --stat
-[difftool]
-	prompt = false
