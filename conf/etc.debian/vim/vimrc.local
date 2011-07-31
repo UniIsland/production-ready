@@ -1,0 +1,20 @@
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+" custom settings
+set nobackup
+set confirm
+"set expandtab
+set history=50		" keep 50 lines of command line history
+set hlsearch
+set number		" print the line number in front of each line
+set ruler		" show the cursor position all the time
+set shiftwidth=4
+set smartindent
+set smarttab
+set splitright
+set splitbelow
+set tabstop=4
+set updatetime=60000
+set wildmenu
+

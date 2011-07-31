@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# 3322.org DDNS Client
+
+# your registered dynamic domain name
+SubDomain="planetb612"
+DOMAINNAME="${SubDomain}.3322.org"
+
+# read account info
+PasswdFile=$HOME/.config/u3322.${SubDomain}.conf
+[ -e "$PasswdFile" ] || {
+	echo "No account infomation available. Please specify."
+	read -p "Username: " USERNAME
+	read -s -p "Password: " PASSWORD
+	echo -e "$USERNAME\n$PASSWORD" | base64 > "$PasswdFile"
+	chmod 600 "$PasswdFile"
+}
+USERNAME="`base64 -d "$PasswdFile" | head -n 1`"
+PASSWORD="`base64 -d "$PasswdFile" | tail -n 1`"
+
+# get local ip address, omitting localhost & localnet
+MYIP="`/sbin/ifconfig  | grep 'inet addr:' | awk '{ print $2}' | egrep -v '127\.0\.0\.[0-9]{1,3}' | egrep -v '192\.168(\.[0-9]{1,3}){2}' | egrep -v '10(\.[0-9]{1,3}){3}' | cut -d : -f 2 | head -n 1`"
+[[ "x$MYIP" = "x" ]] || DOMAINNAME="${DOMAINNAME}&myip=$MYIP"
+
+# do the update
+wget -q -O- "http://$USERNAME:$PASSWORD@members.3322.org/dyndns/update?system=dyndns&hostname=$DOMAINNAME"

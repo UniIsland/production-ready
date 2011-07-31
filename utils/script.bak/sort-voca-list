@@ -1,0 +1,9 @@
+#!/bin/bash
+while [ $# -gt 0 ]; do
+    LN1=`wc -l $1 | awk '{print $1}'`
+    TempList="`sort -Ru $1`"
+    LN2=`echo "$TempList" | tee "$1" | wc -l | awk '{print $1}'`
+    echo "$1: $LN1 lines -> $LN2 lines"
+    shift
+done
+

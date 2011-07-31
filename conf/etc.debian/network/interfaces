@@ -1,0 +1,72 @@
+# This file describes the network interfaces available on your system
+# and how to activate them. For more information, see interfaces(5).
+
+# The loopback network interface
+auto lo
+iface lo inet loopback
+
+# The primary network interface
+allow-hotplug eth0
+iface eth0 inet dhcp
+
+#auto wlan0
+#iface wlan0 inet6 dhcp
+#allow-hotplug wlan0
+iface wlan0 inet dhcp
+#wireless-essid Wireless PKU
+
+iface wlan-ad inet static
+	address		192.168.80.81
+	netmask		255.255.255.0
+	wireless-channel	1
+	wireless-essid		UniDalaran
+	wireless-mode		ad-hoc
+
+# ifup wlan0=wlan_home
+iface wlan-home inet dhcp
+	wpa-ssid	UniDalaran
+	wpa-bssid	00:12:17:BA:32:FD
+	wpa-psk		123abcdef456
+
+iface wlan-aw inet dhcp
+	#wpa-ssid	TP-LIMK_2DB170
+	wpa-ssid	\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00
+	wpa-psk		awawawaw
+
+iface wlan-anwei inet dhcp
+	wpa-ssid	SuperA
+	wpa-bssid	D8:5D:4C:2D:B1:70
+	wpa-psk		awawawaw
+
+iface wlan-sb inet dhcp
+	wireless-essid CMCC-Starbucks
+
+iface wlan-saif inet dhcp
+	wireless-essid SAIF
+
+iface wlan-pku inet dhcp
+	wireless-essid Wireless PKU
+
+iface wlan-pku6 inet dhcp
+	wireless-essid Wireless PKU6
+
+iface wlan-reading inet dhcp
+	wireless-essid reading
+
+iface wlan-home-tp inet dhcp
+	wireless-essid TP-LINK_A05BF4
+
+iface wlan-paradiso inet dhcp
+	wireless-essid AHECKSCH-PC_Network
+
+# aircrack-ng target networks
+iface wlan-crack-3c8700 inet dhcp
+	wireless-essid	TP-LINK_3C8700
+	wireless-key	1391012669
+iface wlan-crack-8ce4aa inet dhcp
+	wireless-essid	123
+	wireless-key	1234567890
+iface wlan-crack-4adcaa	inet dhcp
+	wireless-essid	LDSZ
+	wireless-key	3611167662
+

@@ -1,0 +1,2 @@
+deb http://debian.sei.pku.edu.cn/debian/ squeeze main contrib non-free
+deb http://debian.sei.pku.edu.cn/debian-security/ squeeze/updates main contrib non-free

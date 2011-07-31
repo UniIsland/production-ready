@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+        ServerName dev-photoncopy
+		ServerAlias pq.46610.info pq223
+        ServerAdmin tech@huangtao.me
+        DocumentRoot /home/www/devel/photoncopy
+</VirtualHost>

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# modify before first run.
+USER=mazelord
+Dest=planetb612.info
+
+## Uncomment needed features.
+
+## Tunnel
+BindAddr=127.0.0.1
+ListenPort=3127
+TUNNEL="-D $BindAddr:$ListenPort"
+
+## Port Forwarding
+#PortF="-L 9050:127.0.0.1:9050"
+#PortF="$PortF -L 9507:127.0.0.1:9501"
+#PortF="$PortF -L 1194:127.0.0.1:1194"
+
+ScreenName=ssh4tunnel-appinn
+
+if [[ $UID -ne 0 ]]; then
+  echo "become root to run this script."
+  exit 1
+fi
+
+case "$1" in
+	start|"")
+		echo -n "Starting SSH Socks Tunnel: "
+		if [[ `ls -R /var/run/screen/S-$USER | grep $ScreenName` ]]; then
+			echo "$ScreenName already exists."
+		else
+			su $USER -c "screen -dmS $ScreenName ssh $Dest $TUNNEL $PortF -N" && echo "$ScreenName."
+		fi
+		;;
+	stop)
+		echo -n "Stopping SSH Socks Tunnel: "
+		if [[ `ls -R /var/run/screen/S-$USER | grep $ScreenName` ]]; then
+			ps aux | grep ssh | grep -v SCREEN | grep $ListenPort | awk '{ print $2 }' | xargs kill && echo "$ScreenName."
+		else
+			echo "$ScreenName not running."
+		fi
+		;;
+	*)
+		echo "Usage: $0 {start|stop}"
+		exit 3
+		;;
+esac
+exit 0

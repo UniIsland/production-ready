@@ -1,0 +1,114 @@
+#!/bin/bash
+
+USAGE="Usage: $0 [-s|-S|-d|-D|-z|-Z|-o|-f] FILE [FILE] ..."
+MODE=0
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+	-r)
+		shift ; MODE=1 ;;
+	-s)
+		shift ; MODE=2 ;;
+	-S)
+		shift ; MODE=3 ;;
+	-d)
+		shift ; MODE=4 ;;
+	-D)
+		shift ; MODE=5 ;;
+	-z)
+		shift ; MODE=6 ;;
+	-Z)
+		shift ; MODE=7 ;;
+	-o)
+		shift ; MODE=8 ;;
+	-f)
+		shift ; MODE=9 ;;
+	--)
+		shift ;;
+	-*)
+		echo "mkbak: ${1}: invalid option" >&2
+		echo "$USAGE" >&2
+		exit 2 ;;
+	*)
+		break ;;
+	esac
+done
+
+if [ $# -eq 0 ]; then
+	echo "$USAGE" >&2 ; exit 1
+fi
+
+while [ $# -gt 0 ]; do
+	if ! [ -e "$1" ]; then
+		echo "$1 does not exist."
+		shift
+		continue
+	fi
+	case "$MODE" in
+	0)
+		ext=$(date +%y%m%d.%H%M%S)
+		bak="$1.bak.$ext"
+		cp --preserve=mode,ownership,timestamps "$1" "$bak"
+		chmod -x "$bak"
+		echo "backup saved: $bak "
+		;;
+	1)
+		{ echo "$1" | egrep -q '.*\.(bak|orig)\.[0-9]{6}\.[0-9]{6}$' ; } || { echo "invalid backup file." ; shift ; continue ; }
+		target="`echo "$1" | sed 's/\.bak\.[0-9]\{6\}\.[0-9]\{6\}$//' | sed 's/\.orig\.[0-9]\{6\}\.[0-9]\{6\}$//'`"
+		if [ -e "$target" ]; then
+			cat "$1" > "$target"
+		else
+			cp --preserve=mode,ownership,timestamps "$1" "$target"
+		fi
+		echo "$target recovered from $1."
+		;;
+	2)
+		bak="${1}~"
+		cp --preserve=mode,ownership,timestamps "$1" "$bak"
+		chmod -x "$bak"
+		echo "backup saved: $bak "
+		;;
+	3)
+		FN="`echo -n "$1" | sed 's/~$//'`"
+		if [ -e "$FN" ]; then
+			cat "$1" > "$FN"
+		else
+			cp --preserve=mode,ownership,timestamps  "$1" "$FN"
+		fi
+		echo "$FN recovered from $1."
+		;;
+	4)
+		mv "$1" "${1}~"
+		echo "$1 renamed to ${1}~."
+		;;
+	5)
+		FN="`echo -n "$1" | sed 's/~$//'`"
+		mv "$1" "$FN"
+		echo "$1 renamed to $FN."
+		;;
+	6)
+		mv "$1" "z$1"
+		echo "$1 renamed to z$1."
+		;;
+	7)
+		FN="`echo -n "$1" | sed 's/^\(.*\/\)*z//'`"
+		mv "$1" "$FN"
+		echo "$1 renamed to $FN."
+		;;
+	8)
+		ext=$(date +%y%m%d.%H%M%S)
+		bak="$1.orig.$ext"
+		cp --preserve=mode,ownership,timestamps "$1" "$bak"
+		chmod -x "$bak"
+		echo "backup saved: $bak "
+		;;
+	9)
+		for FN in "`ls -1 ${1}* | egrep '.*\.(bak|orig)\.[0-9]{6}\.[0-9]{6}$'`" ; do {
+			rm -v $FN
+		} ; done
+		;;
+	esac
+	shift
+done
+
+exit 0

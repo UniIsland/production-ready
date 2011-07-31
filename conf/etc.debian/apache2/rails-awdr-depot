@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+	ServerName rails-awdr-depot
+	ServerAdmin tech@huangtao.me
+	DocumentRoot /home/www/rails-awdr-depot/current/public
+	<Directory /home/www/rails-awdr-depot/current/public/>
+		Options -MultiViews
+	</Directory>
+</VirtualHost>
+

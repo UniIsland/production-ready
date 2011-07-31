@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+        ServerName zenteashop.com
+        ServerAdmin tech@huangtao.me
+        DocumentRoot /home/source/developement/zenteashop
+        <Directory /home/source/developement/zenteashop/>
+        Options Indexes FollowSymLinks MultiViews
+        AllowOverride all
+        Order allow,deny
+        allow from all
+        </Directory>
+</VirtualHost>

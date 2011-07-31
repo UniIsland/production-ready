@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# random password generator.
+# read /dev/urandom, pipe thru uuencode, and print to screen.
+# 25 charactor in length.
+
+usage() {
+	echo "Random ASCII Password Generator."
+	echo "Usage: `basename $0` [LENGTH]"
+	exit 1
+}
+
+[ -n "$1" ] && { expr match "$1" ^[0-9]*$ > /dev/null || usage ; }
+dd if=/dev/urandom bs=36 count=1 2>/dev/null | uuencode - | sed -n 2p | cut -c 5-$((4+${1:-32}))
+
+exit 0

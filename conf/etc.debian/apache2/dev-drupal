@@ -1,0 +1,5 @@
+<VirtualHost *:80>
+        ServerName dev-drupal
+        ServerAdmin tech@huangtao.me
+        DocumentRoot /home/www/default/devel/drupal
+</VirtualHost>

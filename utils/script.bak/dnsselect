@@ -1,0 +1,33 @@
+#!/bin/bash
+
+ProfileList="$HOME/.config/dnsselect.conf"
+
+case $1 in
+	-l|--list)
+		echo "available dns servers:"
+		cat $ProfileList
+		exit 0
+		;;
+	-h|--help)
+		echo "dnsselect -h|--help|-l|--list"
+		echo "dnsselect PROFILE"
+		echo -e "\tSwitch dnsmasq forwarder DNS servers."
+		exit 0
+		;;
+	*)
+		dnsProfile="`expr "$1" : '\(\w*\)'`"
+		Profile="${dnsProfile:=default}"
+		;;
+esac
+
+# read server info
+[ -e "$ProfileList" ] && grep -q $Profile $ProfileList || {
+	echo "$Profile: No such profile. Please specify server info."
+	read -p "Server Addr: " ServerAddr
+	read -p "Second Addr (optional): " SecondAddr
+    echo -e "$Profile\t$ServerAddr" >> "$ProfileList"
+	[ -n $SecondAddr ] && echo -e "$Profile\t$SecondAddr" >> "$ProfileList"
+}
+
+grep "$Profile" "$ProfileList" | sed 's/^\w*/nameserver/' | sudo tee /etc/resolv.dnsmasq
+sudo /etc/init.d/dnsmasq restart

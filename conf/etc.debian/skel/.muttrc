@@ -1,0 +1,2 @@
+set folder="$HOME/mail"; set record="+sent"; set mbox="+mbox"; set postponed="+postponed"
+

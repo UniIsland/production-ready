@@ -1,0 +1,48 @@
+#!/bin/bash
+
+TmpDir="/dev/shm"
+SaveDir="/home/misc/gotcha"
+
+shopt -s extglob
+
+save_tmp() {
+	LN="`echo -e "$BUFFER" | wc -l | awk '{print $1}'`"
+	while [ $# -gt 0 ]; do
+		[[ "$1" = "q" ]] && exit 2
+		[[ "$1" = +([0-9]) ]] || { echo "unrecognized parameter:\"$1\", enter number to save file or \"q\" to cancel."; shift; continue; }
+		[ $1 -lt 1 -o $1 -gt $LN ] && { echo "Fail: number:$1 out of range. (1-$LN)"; shift; continue; }
+		FILE="`echo -e "$BUFFER" | sed -n ${1}p`"
+		mv -v "$TmpDir"/"$FILE" "$SaveDir"/"$FILE"
+		shift
+	done
+}
+
+case $1 in
+	lock)
+		xscreensaver-command -lock
+	;;
+	poweroff|reboot)
+		if [[ `ls "$TmpDir"` ]]; then
+			echo "ramfs not empty:"
+			BUFFER="`ls -1 "$TmpDir"`"
+			echo -e "$BUFFER" | grep -n "" | sed 's/^\([1-9]:\)/ \1/'
+			echo -n "enter numbers of files you want to save (\"q\" to cancel):"
+			read NUMS
+			[[ "$NUMS" != "" ]] && save_tmp $NUMS
+		fi
+		echo -n "will now ${1}? (y/n):"
+		read -n 1 ANS
+		echo ""
+		case "$ANS" in
+			[Nn]) exit 1
+			;;
+		esac
+		sudo -k
+		exec sudo $1
+	;;
+esac
+
+sleep 1
+xset dpms force suspend
+
+exit 0

@@ -1,0 +1,43 @@
+#!/bin/bash
+#
+# dic
+# 
+
+#log the queries
+echo "$1" >> /home/misc/opr/word_query.list
+
+{
+	echo -n "-->WordNet: "
+	wn $1 -over
+	echo
+	sdcv -n $1
+	echo "-->WordNet search options"
+	wn $1
+} | less
+
+exit 0
+
+# attached below /etc/bash_completion.d/dic
+
+## dic completion
+##
+## shamelessly copied from look(1)
+## by Tao, on Feb 18th, 2010
+#
+#have wn && have sdcv &&
+#_wn()
+#{
+#    local cur
+#
+#    COMPREPLY=()
+#    cur=`_get_cword`
+#
+#    if [ $COMP_CWORD = 1 ]; then
+#        COMPREPLY=( $( compgen -W '$(look "$cur" 2>/dev/null)' ) )
+#    fi
+#} && {
+#	complete -F _wn wn
+#	complete -F _wn sdcv
+#	complete -F _wn dic
+#}
+

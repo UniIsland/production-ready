@@ -1,0 +1,46 @@
+127.0.0.1	localhost
+127.0.1.1	greedisland.planetb612.info	greedisland gi
+
+# The following lines are desirable for IPv6 capable hosts
+::1     ip6-localhost ip6-loopback localhost
+fe00::0 ip6-localnet
+ff00::0 ip6-mcastprefix
+ff02::1 ip6-allnodes
+ff02::2 ip6-allrouters
+
+# home
+192.168.243.25  	lt	loguetown
+192.168.243.49  	gm	goldenmarie
+192.168.243.128 	wi	whaleisland
+
+2001:470:18:37e::2					lt6
+2001:470:19:37e:1::1				lt6
+2001:470:19:37e:2e0:ff:fefb:b6a0	gm6
+2001:470:19:37e:215:c5ff:fe7c:2a2c	gi6
+
+# gm @ pku
+2001:da8:201:1386:2e0:ff:fefb:b6a0	gm6-pku
+#222.29.86.132	gm.planetb612.info
+
+# local apache virtual hosts
+#127.0.0.1	zenteashop.com
+#192.168.243.49	101010101010.cn
+
+# vps
+#2a00:dd0:0:4::40	vps4less vps4less-promotion
+#2a00:dd0:0:4::41	vps4less-1
+#94.228.208.173		vps4less-v4
+
+# eduvpn
+#2001:470:a:220::2 v6.eduvpn.com #he
+#2001:388:f000::e83 v6.eduvpn.com #aar
+#2607:f0d0:2001:77::a0 v6.eduvpn.com #native
+
+# web dev virtual hosts
+127.0.0.1	dev-photoncopy pq.46610.info rails-awdr-depot
+
+# tmp records
+#2001:da8:201:1386:2e0:ff:fefb:b6a0 blog.photoncopy.com
+#2001:da8:201:1386:52e5:49ff:fe24:b8db thousandsunny thousandsunny.planetb612.info ts.planetb612.info
+222.29.86.56	thousandsunny thousandsunny.planetb612.info ts.planetb612.info
+
