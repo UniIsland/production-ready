@@ -106,7 +106,7 @@ hi DiffChange ctermbg=black
 hi DiffDelete ctermbg=25
 hi DiffText cterm=none ctermbg=240
 
-:set completeopt=longest,menuone
+"set completeopt=longest,menuone
 
 " php syntax check
 "map <C-B> :!php -l %<CR>
