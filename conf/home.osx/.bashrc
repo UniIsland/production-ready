@@ -9,10 +9,10 @@ case "$TERM" in
 	xterm-*color) color_prompt=yes;;
 esac
 if [ "$color_prompt" = yes ]; then
-	PS1='\u@\h:\[\e[0;36m\]\w\[\e[0m\] \$ '
+	PS1='\[\e]0;\u@\h: \w\a\\u@\h:\[\e[0;36m\]\w\[\e[0m\] \$ '
 	export CLICOLOR=true
 else
-	PS1='\u@\h:\w \$ '
+	PS1='\[\e]0;\u@\h: \w\a\]\u@\h:\w \$ '
 fi
 unset color_prompt
 
