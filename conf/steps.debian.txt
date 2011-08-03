@@ -1,0 +1,33 @@
+﻿minimal cli install (netinst)
+public key ssh
+sources.list
+dpkg-reconfigure locales tzdata
+/home/usr/local/sbin
+adduser neo
+aptitude upgrade / install -R
+	openssh-server nfs-common bash-completion less screen mlocate htop lshw debian-backports-keyring (netselect-apt
+	-r xfce4 xfce4-battery-plugin xfce4-cpugraph-plugin xfce4-diskperf-plugin xfce4-sensors-plugin xfce4-systemload-plugin thunar-volman mesa-utils numlockx gksu radeontools_ xorg-docs_ (thunar-archive-plugin gsynaptics
+	vsftpd nfs-kernel-server samba bind9 dnsutils apache2 mysql-server phpmyadmin openssl (tightvncserver
+	ntfs-3g ntfsprogs dosfstools mtools gparted (pmount
+	-r im-switch scim-pinyin xfonts-intl-chinese xfonts-intl-chinese-big xfonts-wqy ttf-arphic-bkai00mp ttf-arphic-bsmi00lp ttf-arphic-gbsn00lp ttf-arphic-gbsn00lp ttf-wqy-zenhei xfonts-wqy ttf-arphic-ukai ttf-arphic-uming xfonts-intl-european xfonts-intl-japanese xfonts-intl-japanese-big xfonts-intl-phonetic ttf-unfonts-core ttf-sazanami-mincho ttf-sazanami-gothic
+	-r -t lenny-backports iceweasel pidgin 
+	-t lenny-backports openoffice.org 
+	filezilla kate amarok kpdf
+	ntpdate sysv-rc-conf anacron p7zip-full rsync (aria2 p7zip-rar hal hibernate
+	firmware-iwlwifi wicd 
+	xtightvncviewer powertop nmap nessus iotop
+	tor azureus mldonkey-server xinetd (squid3 pptpd pptp-linux xl2tpd openvpn
+	sun-java6-jre sun-java6-plugin sshfs curlftpfs
+	gcc build-essential linux-headers-`uname -r`
+	(nicotine nessus
+mysql database
+restore settings / configurations
+	menu.lst /etc /home
+preferences & tweaks & hacks
+im-switch
+rc scripts / runlevel
+auto login
+df/du
+tarball / iso install
+	texlive
+	vmware-server

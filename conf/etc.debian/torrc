@@ -1,0 +1,26 @@
+SocksPort 9050 # what port to open for local application connections
+SocksListenAddress 127.0.0.1
+SocksPolicy accept 127.0.0.1
+#SocksPolicy accept 10.0.0.0/8
+#SocksPolicy accept 172.16.0.0/12
+Sockspolicy accept 192.168.0.0/16
+Sockspolicy reject *
+ControlPort 9051
+HashedControlPassword 16:02A157E59D4376A460E269BE46CF8C7CCA3AAD634C29488182353E73DB
+## password hint: w
+## or set ssh tunnel for remote access
+
+DataDirectory /var/lib/tor
+Log notice file /var/log/tor/notices.log
+#Log debug file /var/log/tor/debug.log
+
+RunAsDaemon 1
+
+#NewCircuitPeriod 60
+#KeepalivePeriod 180
+
+#Nickname alexwhobelieves
+#Address uniisland.3322.org
+#ContactInfo Alex <uniisland AT pku dot edu dot cn>
+#ORPort 9049
+#DirPort 9048
