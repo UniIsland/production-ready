@@ -16,6 +16,7 @@
 	diff = auto
 	branch = auto
 	interactive = auto
+	grep = auto
 #	ui = true
 #	pager = true
 [alias]
