@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# require fuse4x, ntfs-3g
+# use macports to install them, then
+# place this script at /sbin/mount_ntfs
+
 VOLUME_NAME="${@:$#}"
 VOLUME_NAME=${VOLUME_NAME#/Volumes/}
 
