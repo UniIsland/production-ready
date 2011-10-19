@@ -1,0 +1,134 @@
+#! /bin/bash
+
+TODO_FILE="$HOME/misc/.todo.txt"
+#expr match "$0" ".*task" > /dev/null && TODO_FILE=/home/misc/opr/task.txt
+
+shopt -s extglob
+
+die() {
+	echo "$2"
+	exit "$1"
+}
+
+usage() {
+	echo "Usage: `basename $0` COMMAND [OPTION ...] [NUM ...] [JOB] ..."
+	[ $1 -eq 1 ] && { echo -e "Base commands:\n\tl|list i|insert c|complete a|append r|replace d|del h|help."
+		return; }
+	[ $1 -eq 2 ] || return
+# 	sed 's/\t/  /g' << EOF
+# 	Usage: `basename $0` [ACTION] [OPTION]...
+# EOF
+}
+
+testfile() {
+  [ -e "$TODO_FILE" ] || createtodo
+  [ -w "$TODO_FILE" ] || die "$?" "Cannot access \"$TODO_FILE\"."
+}
+
+createtodo() {
+	echo -n "\"$TODO_FILE\" not found, create a new one? (y/n):"
+	read -n 1 ANS
+	echo ""
+	case "$ANS" in
+		[Nn])
+		  echo "Aborting: `basename $0` $*: command discarded."
+		  exit 3
+		;;
+	esac
+	echo "=-=-=" > "$TODO_FILE" || die "$?" "Cannot write to \"$TODO_FILE\"."
+}
+
+# Begin
+
+[ -z "$1" ] && { usage 1; exit 3; }
+testfile
+LN=`grep -n ^=-=-=$ "$TODO_FILE" | awk -F ":" '{ print $1 }'`
+
+operation="$1"
+shift
+case $operation in
+	l|list)
+		case "$1" in
+		d|due)
+		;;
+		c|completed)
+		;;
+		a|all)
+			less "$TODO_FILE"
+		;;
+		*)
+			BUFFER="`{ head -$((LN-1)) "$TODO_FILE" | grep -n '' | sed 's/^\([1-9]:\)/ \1/'; }`"
+			egrep "^ ?[0-9]*: !+" <<< "$BUFFER" | sort -k 2r,2
+			egrep -v "^ ?[0-9]*:\W(-|!)" <<< "$BUFFER"
+			egrep "^ ?[0-9]*: -	" <<< "$BUFFER"
+		;;
+		esac
+	;;
+	i|insert)
+		[ -z "$1" ] && { usage 1; exit 3; }
+		PRI=
+		DATE=
+		[[ "$1" = @(+(@)|-) ]] && { PRI=" `sed 's/@/!/g' <<< $1`"; shift; }
+		[[ `egrep "^[0-9]{6}$" <<< "$1"` ]] && {
+			DATE="\t\tdue on 20`sed -e 's/^\([0-9]\{2\}\)\([0-9]\{2\}\)\([0-9]\{2\}\)$/\1-\2-\3/' <<< $1`."
+			shift; }
+		[[ `egrep "^[0-9]{4}$" <<< "$1"` ]] && {
+			DATE="\t\tdue on $(date +%Y)`sed -e 's/^\([0-9]\{2\}\)\([0-9]\{2\}\)$/-\1-\2/' <<< $1`"
+			shift; }
+		[[ "$1" = @(+(@)|-) ]] && { PRI=" `sed 's/@/!/g' <<< $1`"; shift; }
+		[ -z "$1" ] && { usage 1; exit 3; }
+		BUFFER="`{
+			head -$((LN-1)) "$TODO_FILE"
+			echo -e "$PRI\t $*$DATE"
+			tail --lines=+$LN "$TODO_FILE"
+		}`"
+		echo "$BUFFER" > "$TODO_FILE"
+		echo -e "Job added: $LN:$PRI   $*$DATE"
+	;;
+	c|complete)
+		[[ $# -eq 0 ]] && die 3 "Error: Please specify job number."
+		LND="$(($1+1))"
+		while [ $# -gt 0 ]; do
+			[[ "$1" = +([0-9]) ]] || { echo "Error: Unsupported parameter:$1, should be job number."; shift; continue; }
+			[ $1 -lt 1 -o $1 -ge $LN ] && { echo "Fail: Job number:$1 out of range. (1-$((LN-1)))"; shift; continue; }
+			[[ $1 -ge $LND ]] && die 4 "Fail: Please input job number in decreasing order. (discarding $*.)"
+			BUFFER="`sed -n ${1}p "$TODO_FILE" | sed 's/^[- !]*	 \(.*\?\)$/\1/' | sed 's/\(		due on [-0-9]*\)$//'`"
+			echo -e "$(date +%Y-%m-%d)\t$BUFFER" >> "$TODO_FILE"
+			sed -i ${1}d "$TODO_FILE"
+			echo "Job marked as completed: \"$BUFFER\"."
+			LND=$1
+			shift
+		done
+	;;
+	a|append)
+	
+	;;
+	r|replace)
+	
+	;;
+	p*)
+	# p- p0 p1 p2 p3
+	;;
+	due)
+	
+	;;
+	d|del|delete)
+		[[ $# -eq 0 ]] && die 3 "Error: Please specify job number."
+		LND="$(($1+1))"
+		while [ $# -gt 0 ]; do
+			[[ "$1" = +([0-9]) ]] || { echo "Error: Unsupported parameter:$1, should be job number."; shift; continue; }
+			[ $1 -lt 1 -o $1 -ge $LN ] && { echo "Fail: Job number:$1 out of range. (1-$((LN-1)))"; shift; continue; }
+			[[ $1 -ge $LND ]] && die 4 "Fail: Please input job number in decreasing order. (discarding $*.)"
+			echo "Deleted: $1: `sed -n ${1}p "$TODO_FILE"`."
+			sed -i ${1}d "$TODO_FILE"
+			LND=$1
+			shift
+		done
+	;;
+	h|help)
+	
+	;;
+	*) usage 0; exit 3 ;;
+esac
+
+exit 0
