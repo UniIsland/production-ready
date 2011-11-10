@@ -10,6 +10,7 @@ CATG = None
 
 ## modify me before using
 TODO_DIR = os.environ['HOME'] + '/opr/.todo'
+## TODO gonna use sqlite
 
 def usage():
     print "Usage: " + TODO_CMD + " ( -h | -l | -i | -f | -d | --help | --insert | --finish | --delete)"
