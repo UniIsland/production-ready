@@ -1,0 +1,16 @@
+<VirtualHost *:80>
+
+## serve redmine in a subdirectory
+#	DocumentRoot /home/www/default
+
+## redmine
+    RailsEnv production
+    SetEnv X_DEBIAN_SITEID "default"
+    SetEnv RAILS_RELATIVE_URL_ROOT "/redmine"
+	<Directory "/home/www/default/redmine/">
+		RailsBaseURI /redmine
+		PassengerResolveSymlinksInDocumentRoot on
+	</Directory>
+	Alias "/redmine/plugin_assets/" /var/cache/redmine/default/plugin_assets/
+
+</VirtualHost>
