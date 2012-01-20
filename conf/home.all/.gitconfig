@@ -9,6 +9,7 @@
 	prompt = false
 [merge]
 	tool = vimdiff
+	conflictstyle = diff3
 [rerere]
 	enabled = true
 [color]
@@ -24,8 +25,10 @@
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
 	ci = commit
 	co = checkout
-	st = status
+	st = status -sb
 	lc = log ORIG_HEAD.. --stat --no-merges
 	lg = log --graph --pretty=oneline --abbrev-commit
 	lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	diffstat = diff-tree --stat
+[branch]
+	autosetuprebase = always
