@@ -1,4 +1,5 @@
-function git-daily-sum {
+## helper function to output a daily summary of recent commits in a git repository
+git_daily_sum() {
 	NEXT=$(date +%F)
 	expr match "$1" '^[0-9]\+$' > /dev/null && len="$1" || len="7"
 	echo "CHANGELOG"

@@ -15,3 +15,7 @@
 # to add the above directive to the end of your /etc/sudoers file to enable 
 # this functionality for existing installations if you wish!
 #
+# Finally, please note that using the visudo command is the recommended way
+# to update sudoers content, since it protects against many failure modes.
+# See the man page for visudo for more information.
+#
