@@ -1,0 +1,78 @@
+######### Linux.gitignore ########
+
+.*
+!.gitignore
+*~
+
+# KDE
+.directory
+
+
+######### Linux.gitignore ########
+
+######### OSX.gitignore ########
+
+.DS_Store
+
+# Thumbnails
+._*
+
+# Files that might appear on external disk
+.Spotlight-V100
+.Trashes
+
+
+######### OSX.gitignore ########
+
+######### vim.gitignore ########
+
+.*.sw[a-z]
+*.un~
+Session.vim
+
+
+######### vim.gitignore ########
+
+######## Rails.gitignore ########
+
+*.rbc
+*.sassc
+.sass-cache
+capybara-*.html
+.rspec
+/.bundle
+/vendor/bundle
+/log/*
+/tmp/*
+/db/*.sqlite3
+/public/system/*
+/coverage/
+/spec/tmp/*
+**.orig
+rerun.txt
+pickle-email-*.html
+######## Rails.gitignore ########
+
+######## Ruby.gitignore ########
+
+*.gem
+*.rbc
+.bundle
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+test/tmp
+test/version_tmp
+tmp
+
+# YARD artifacts
+.yardoc
+_yardoc
+doc/
+
+######## Ruby.gitignore ########
+
