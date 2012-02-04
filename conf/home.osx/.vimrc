@@ -43,7 +43,7 @@ set backspace=indent,eol,start
 " custom settings
 set nobackup
 set confirm
-"set expandtab
+set expandtab
 set history=50		" keep 50 lines of command line history
 set hlsearch
 set number		" print the line number in front of each line
@@ -51,9 +51,11 @@ set ruler		" show the cursor position all the time
 set shiftwidth=4
 set smartindent
 set smarttab
+set softtabstop=4
 set splitright
 set splitbelow
 set tabstop=4
+"set textwidth=80
 set updatetime=60000
 set wildmenu
 
@@ -70,18 +72,18 @@ command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 
 " syntax folding
 set foldmethod=syntax
-let g:php_folding=1
 let javaScript_fold=1
+let g:php_folding=1
+let ruby_fold=1               " Ruby
 let sh_fold_enabled=1         " sh
 let xml_syntax_folding=1      " XML
 "let perl_fold=1               " Perl
 "let r_syntax_folding=1        " R
-"let ruby_fold=1               " Ruby
 "let vimsyn_folding='af'       " Vim script
 
 " more colors
 set t_Co=256
-"colorscheme elflord
+colorscheme elflord
 "highlight DiffAdd ctermfg=Yellow
 "hi DiffAdd ctermbg=160
 "hi DiffChange ctermbg=black
