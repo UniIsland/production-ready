@@ -1,0 +1,6 @@
+adduser
+disable root
+ssh-keygen
+sshd_config
+$PATH
+bashrc, profile & skel
