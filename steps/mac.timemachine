@@ -1,0 +1,12 @@
+a) you need to share a file system to your mac from your Linux server
+b) you need to create a sparsebundle on your mac and copy it to the shared storage
+c) you then point your mac's time machine to the server/sparsebundle
+
+
+defaults write com.apple.systempreferences TMShowUnsupportedNetworkVolumes 1
+
+
+sudo hdiutil create -size 320g -type SPARSEBUNDLE -nospotlight -volname "Backup of <computer_name>" -fs "Case-sensitive Journaled HFS+" -verbose ~/Desktop/<computer_name>_<mac address>.sparsebundle
+
+#http://guides.macrumors.com/Linux_Time_Capsule_Server
+

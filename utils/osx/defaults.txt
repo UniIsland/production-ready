@@ -1,0 +1,3 @@
+## change default screenshot save location and format
+defaults write com.apple.screencapture location $path$
+defaults write com.apple.screencapture type $format$ # BMP, GIF, JPG, PDF, PNG, or TIFF
