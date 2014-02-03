@@ -9,10 +9,11 @@
 # =-=
 
 NAME="shadowsocks"
-CONFFILE="$HOME/bin/shadowsocks.config.json"
+VENVPATH="$HOME/.virtualenvs/sandbox/bin"
+CONFFILE="$HOME/bin/lib/shadowsocks.config.json"
 LOGFILE="/tmp/$NAME.log"
 PIDFILE="/tmp/$NAME.pid"
-COMMAND=($HOME/.virtualenvs/sandbox/bin/python $HOME/.virtualenvs/sandbox/bin/sslocal -c $CONFFILE)
+COMMAND=($VENVPATH/python $VENVPATH/sslocal -c $CONFFILE)
 
 NETWORK_INTERFACE="Wi-Fi"
 PROXY_HOST="127.0.0.1"
