@@ -1,0 +1,9 @@
+## simple virtualenv wrapper i wrote while working at tukeq
+
+## install
+$ mkdir -p ~/.virtualenvs
+$ cp ./workon.sh ~/.virtualenvs/.workon.sh
+$ echo ". ~/.virtualenvs/.workon.sh" >> ~/.bashrc
+
+## created env data is stored in ~/.virtualenvs/.envs.list
+
