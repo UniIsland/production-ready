@@ -1,3 +1,7 @@
+# reset PATH
+export OLD_PATH="$PATH"
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+
 ZSH=$HOME/.oh-my-zsh
 #ZSH_THEME="robbyrussell"
 ZSH_THEME="t1"
