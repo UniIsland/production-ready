@@ -13,7 +13,8 @@
 ## CONFIG START ## 
 NAME="shadowsocks"
 VENVPATH="$HOME/.virtualenvs/sandbox/bin"
-CONFFILE="$HOME/bin/lib/$NAME.config.json"
+CONFPATH="$HOME/.config/shadowsocks" # $CONFPATH/default.json
+#CONFFILE="$HOME/bin/lib/$NAME.config.json"
 LOGFILE="/tmp/$NAME.log"
 PIDFILE="/tmp/$NAME.pid"
 
@@ -22,7 +23,7 @@ PROXY_HOST="127.0.0.1"
 PROXY_PORT="3131"
 ## CONFIG END ##
 
-COMMAND=($VENVPATH/python $VENVPATH/sslocal -c $CONFFILE)
+COMMAND=($VENVPATH/python $VENVPATH/sslocal -c \$CONFFILE)
 
 cat <<EOF
 shadowsocks(){
@@ -42,8 +43,11 @@ shadowsocks(){
     fi
   ;;
   start)
-    [ -r $CONFFILE ] || {
-      echo "[ERR] conf file not found ($CONFFILE)."
+    [ -d $CONFPATH ] || mkdir -p $CONFPATH
+    local SERVER=\$(expr "\$2" : '\([0-9a-zA-Z]*\)')
+    local CONFFILE="$CONFPATH/\${SERVER:=default}.json"
+    [ -r \$CONFFILE ] || {
+      echo "[ERR] conf file not found (\$CONFFILE)."
       return 1
     }
     local PID=\$(shadowsocks _pid)
