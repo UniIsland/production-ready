@@ -1,0 +1,60 @@
+#! /bin/bash
+
+# modify before first run.
+DESC="SSH Tunnel to Remote Host"
+NAME=tunnel2ssh
+Dest=127.0.0.1
+RemoteUser=remoteuser
+Port="-p 22"
+KeyFile="-i $HOME/.ssh/id_dsa"
+
+## Uncomment needed features.
+Comp=""
+#Comp="-C"
+
+## Tunnel
+BindAddr=127.0.0.1
+ListenPort=3122
+TUNNEL="-D $BindAddr:$ListenPort"
+
+## Port Forwarding
+PortF=""
+#PortF="-L 9050:127.0.0.1:9050"
+#PortF="$PortF -L 9507:127.0.0.1:9501"
+#PortF="$PortF -L 1194:127.0.0.1:1194"
+
+SSHopt="-f -N $RemoteUser@$Dest $Port $KeyFile $TUNNEL $PortF $Comp"
+TunnelPID=`ps -ef | grep "ssh -f -N" | grep "$ListenPort" | awk '{ print $2 }'`
+
+case "$1" in
+	start|"")
+		echo -n "Starting $DESC: "
+		if [ $TunnelPID ]; then
+			echo ".. [already running]."
+			exit 1
+		fi
+		ssh $SSHopt || exit 2
+		echo "$NAME."
+		;;
+	stop)
+		echo -n "Stopping $DESC: "
+		if [ -z $TunnelPID ]; then
+			echo ".. [not running]."
+			exit 1
+		fi
+		kill $TunnelPID || exit 2
+		echo "$NAME."
+		;;
+	status|st)
+		if [ $TunnelPID ]; then
+			echo "Listening on port $ListenPort."
+		else
+			echo "Not running."
+		fi
+		;;
+	*)
+		echo "Usage: $0 {start|stop|status}"
+		exit 3
+		;;
+esac
+exit 0

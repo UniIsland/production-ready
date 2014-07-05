@@ -19,13 +19,17 @@ if os.path.exists(outputFile):
 	print outputFile+" already exists... aborting."
 	sys.exit(1)
 
-for i in inputFiles:
-	pdf = PdfFileReader(file(i, "rb"))
-	if pdf.getIsEncrypted():
-		pdf.decrypt('')
-	print i + ": " + str(pdf.getNumPages()) + " pages"
-	for pageNum in range(pdf.getNumPages()):
-		pdfOutput.addPage(pdf.getPage(pageNum))
+try:
+	for i in inputFiles:
+		pdf = PdfFileReader(file(i, "rb"))
+		if pdf.getIsEncrypted():
+			pdf.decrypt('')
+		print i + ": " + pdf.getNumPages() + " pages"
+		for pageNum in range(pdf.getNumPages()):
+			pdfOutput.addPage(pdf.getPage(pageNum))
+except:
+	print "error: reading input pdf files."
+	sys.exit(2)
 
 try:
 	outputStream = file(outputFile, "wb")

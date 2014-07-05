@@ -1,0 +1,43 @@
+#! /bin/bash
+### BEGIN INIT INFO
+# Provides:          iptables rule set
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2
+# Default-Stop:      
+# Short-Description: Example initscript
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
+### END INIT INFO
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+DAEMON=/sbin/iptables
+
+echo -n "Applying iptables rule set: "
+
+# Flush
+#iptables -F
+#iptables -t nat -F
+#iptables -t mangle -F
+#iptables -X
+#iptables -t nat -X
+#iptables -t mangle -X
+
+# Masquerade localnet connections
+echo -n "masquerading "
+iptables -t nat -A POSTROUTING -s 192.168.0.0/16 -j MASQUERADE
+
+# transparent proxying w/ squid
+echo -n "transparent-proxy "
+#iptables -t nat -N BYPASS
+#iptables -t nat -A PREROUTING -p tcp -m tcp --dport 80 -j BYPASS
+iptables -t nat -A PREROUTING ! -d 222.29.86.0/24 -p tcp -m tcp --dport 80 -j REDIRECT --to-ports 3128 
+
+# dns intercepting
+iptables -t nat -A PREROUTING -p udp -m udp --dport 53 -j REDIRECT --to-ports 53
+
+# url to bypass squid
+#iptables -t nat -A BYPASS -d merry-go.appspot.com -j ACCEPT
+
+
+echo "..[done]"
