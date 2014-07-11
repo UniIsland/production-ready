@@ -1,0 +1,22 @@
+---
+:smtp:
+  :address: smtp.gmail.com
+  :port: '587'
+  :user_name: abc@example.com
+  :password: *****
+  :authentication: :plain
+  :enable_starttls: true
+:jobs:
+  _default: &DEFAULTS
+    :charset: UTF-8
+    :from: Tao <tao@zhihu.com>
+    :signature: "\n\n-- \nCheers,\nTao"
+    :enabled: true
+  test:
+    <<: *DEFAULTS
+    :enabled: false
+    :to: John <john@example.com>
+    :reply_to: abc@example.com
+    :subject: Test Mail - %s
+    :body: "mail body.\n\nCheers\n"
+    :when: 25 8 * * 3
