@@ -1,0 +1,9 @@
+## Sourcing other StackScripts
+# linode:StackScript Bash Library - https://www.linode.com/stackscripts/view/1
+source <ssinclude StackScriptID="1">
+# xenofox:User Security - https://www.linode.com/stackscripts/view/165
+source <ssinclude StackScriptID="165">
+# clowwindy:Shadowsocks - https://www.linode.com/stackscripts/view/9409
+source <ssinclude StackScriptID="9409">
+# firebelly:Puppet Setup - https://www.linode.com/stackscripts/view/4039
+source <ssinclude StackScriptID="4039">
