@@ -1,0 +1,17 @@
+# generate private key
+openssl genrsa -nodes -out server.key 2048
+
+# generate csr (certificate signing request)
+openssl req -new -key server.key -out server.csr
+
+# generate private key and csr in one line
+openssl req -nodes -newkey rsa:2048 -keyout server.key -out server.csr
+
+# create a self-signed certificate
+openssl req -new -x509 -days 3650 -key server.key -out server.crt
+# or
+openssl x509 -req -days 3650 -in server.csr -signkey server.key -out server.crt
+
+# one-liner
+openssl req -x509 -nodes -days 3650 -newkey rsa:2048 -keyout server.key -out server.crt
+
