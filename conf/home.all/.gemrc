@@ -1,8 +1,11 @@
+--- #http://guides.rubygems.org/command-reference/
 :update_sources: true
 :backtrace: false
-:sources: 
-- http://rubygems.org/
-- http://gems.github.com/
+#:http_proxy: http://localhost:8123
+:sources:
+  - https://ruby.taobao.org/
+#- http://rubygems.org/
+#- http://gems.github.com/
 :verbose: true
-gem: --no-document
+#gem: --no-document
 

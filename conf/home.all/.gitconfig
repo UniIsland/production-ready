@@ -1,35 +1,63 @@
+; vim: set ai ci noet nosta sts=4 sw=4 ts=4 tw=0 :
 [user]
 	name = Tao
 	email = tao@huangtao.me
 [core]
 	editor = vim
 	excludesfile = ~/.gitignore_global
+	whitespace = trailing-space,space-before-tab
+[branch]
+	autosetuprebase = always
 [diff]
 	tool = vimdiff
 [difftool]
 	prompt = false
+[grep]
+	lineNumber = true
+[http]
+#  proxy = socks5://127.0.0.1:3127
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
+[push]
+	default = upstream
 [rerere]
 	enabled = true
 [color]
-	status = auto
-	diff = auto
 	branch = auto
-	interactive = auto
+	diff = auto
 	grep = auto
-#	ui = true
-#	pager = true
+	interactive = auto
+	status = auto
+	ui = auto
 [alias]
 	abbr = "!sh -c 'git rev-list --all | grep ^$1 | while read commit; do git --no-pager log -n1 --pretty=format:\"%H %ci %an %s%n\" $commit; done' -"
 	aliases = !git config --get-regexp 'alias.*' | colrm 1 6 | sed 's/[ ]/ = /'
+	br = branch
+	cd = !cd \"$(git rev-parse --show-toplevel || echo '.')\"
 	ci = commit
+	cia = commit --all
+	cii = commit --patch
 	co = checkout
-	st = status -sb
-	lc = log ORIG_HEAD.. --stat --no-merges
+	d = diff --check
+	dc = diff --cached
+	ds = diff --summary
+	dt = diff --stat
+	dtt = diff-tree --stat
+	fix-newline-at-eof = !git grep -Il . | xargs -I{} bash -c '[ -n "$(tail -c1 {})" ] && echo >> {}'
+	fix-tab-indent = !git grep '\t' | grep ':' | awk -F: '{print $1}' | sort -u | xargs -n 1 sed -i '' -e 's/\t/  /g'
+	fix-trailing-whitespace = !git grep -E '\\s$' | grep ':' | awk -F: '{print $1}' | sort -u | xargs -n 1 sed -r -i '' -e 's/\\s+$//'
 	lg = log --graph --pretty=oneline --abbrev-commit
+	lgc = log ORIG_HEAD.. --stat --no-merges
 	lgg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
-	diffstat = diff-tree --stat
-[branch]
-	autosetuprebase = always
+	lgh = log --stat --max-count=10
+	lgo = log --oneline
+	lgt = log --all --graph --decorate --oneline --simplify-by-decoration
+	lgw = whatchanged --oneline
+	r = remote -v
+	root = !pwd
+	st = status -sb
+	sti = status -sb --ignored
+	summary = "!echo; echo \"repo age :\" $(git log --reverse --pretty=oneline --format=\"%ar\" | head -n 1 | sed 's/ago//'); echo \"active   :\" $(git log --all --pretty='format: %ai' | cut -d ' ' -f 2 | sort -u | wc -l | tr -d ' ') days; echo \"commits  :\" $(git log --all --oneline | wc -l | tr -d ' '); echo \"files    :\" $(git ls-files | wc -l | tr -d ' '); echo \"authors  :\"; git shortlog -n -s | awk '{ args[NR] = $0; sum += $0 } END { for (i = 1; i <= NR; ++i) { printf \"%-30s %2.1f%%\\n\", args[i], 100 * args[i] / sum } }'; echo"
+	howto-wipe-history = !echo 'run: git filter-branch -f --index-filter \"git rm -r --cached $FILENAME --ignore-unmatch\" --prune-empty --tag-name-filter cat -- --all'
+
