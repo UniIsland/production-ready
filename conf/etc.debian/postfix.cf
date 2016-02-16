@@ -1,0 +1,22 @@
+# generated with `postconf -n`
+alias_database = hash:/etc/aliases
+alias_maps = hash:/etc/aliases
+append_dot_mydomain = no
+biff = no
+config_directory = /etc/postfix
+inet_interfaces = loopback-only
+mailbox_command = procmail -a "$EXTENSION"
+mailbox_size_limit = 0
+mydestination = theunitinterval.com, wisdom.ln.planetb612.info, localhost.ln.planetb612.info, localhost
+myhostname = wisdom.ln.planetb612.info
+mynetworks = 127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128
+myorigin = /etc/mailname
+readme_directory = no
+recipient_delimiter = +
+relayhost =
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+smtpd_banner = $myhostname ESMTP $mail_name (Debian/GNU)
+smtpd_tls_cert_file = /etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file = /etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtpd_use_tls = yes
