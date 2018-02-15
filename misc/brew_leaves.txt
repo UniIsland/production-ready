@@ -12,6 +12,7 @@ hexedit
 highlight
 iperf3
 libtiff
+linode-cli
 lynx
 lzop
 m-cli
@@ -20,7 +21,9 @@ mtr
 nmap
 openssh
 p7zip
+polipo
 pyenv
+python
 r
 rbenv
 screen

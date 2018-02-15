@@ -1,4 +1,5 @@
 adobe-air
+alfred
 atom
 battle-net
 betterzipql
