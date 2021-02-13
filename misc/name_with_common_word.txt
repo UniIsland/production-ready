@@ -1,0 +1,7 @@
+get random word
+
+$ shuf -n 1 words.list
+
+get random word with certain length
+
+$ grep -x '......' words.list | shuf -n 1
